@@ -10,7 +10,6 @@ echo $@
 RUN=$1
 ITERATIONS=$2
 REBUILD=$3
-MODE=$4
 
 TOPIC=test_failure_$RUN
 PARTITIONS=1
@@ -27,11 +26,11 @@ fi
 
 kafka_2.10-0.9.0.1/bin/kafka-topics.sh --create --zookeeper $DOCKER_IP:2181 --topic $TOPIC --partitions $PARTITIONS --replication-factor $REPLICATION_FACTOR
 
-if [ "${MODE}" = "local" ]; then 
+if [ "$OSTYPE" == "linux-gnu" ]; then 
   echo "running in local mode"
   CONSUMER_PROPS=file://${__dir}/kafka-consumer-harness/src/main/resources/consumer_local.properties
   PRODUCER_PROPS=file://${__dir}/kafka-producer-harness/src/main/resources/producer_local.properties
-else
+elif [[ "$OSTYPE" == "darwin"* ]]; then
   CONSUMER_PROPS=file://${__dir}/kafka-consumer-harness/src/main/resources/consumer.properties
   PRODUCER_PROPS=file://${__dir}/kafka-producer-harness/src/main/resources/producer.properties
 fi
