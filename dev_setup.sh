@@ -15,7 +15,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   DOCKER_IP=$(docker-machine ip default)
 fi
 
-[ -d "kafka-compose" ] || git clone git@github.com:dmitriy-svds/kafka-compose.git
+[ -d "kafka-compose" ] || git clone https://github.com/dmitriy-svds/kafka-compose.git
 [ -d "kafka_2.10-0.9.0.1" ] || curl -O http://apache.spinellicreations.com/kafka/0.9.0.1/kafka_2.10-0.9.0.1.tgz && tar -xzf kafka_2.10-0.9.0.1.tgz && rm kafka_2.10-0.9.0.1.tgz
 
 (cd kafka-compose; docker-compose up -d )
